@@ -1,6 +1,8 @@
 const commentsRouter = require('express').Router()
 const Comments = require('../models/comments')
 const comments = require('../models/comments')
+express = require('express')
+commentsRouter.use(express.json())
 
 commentsRouter.get('/comments', (req, res) => {
     Comments

@@ -6,7 +6,7 @@ articlesRouter.get('/articles', (req, res) => {
     Articles
     .find()
     .populate('userId')
-    .populate('commentId')
+    .populate('comments')
     .then(articles => res.json(articles))
     .catch(err => res.json(err))
 })
