@@ -5,6 +5,7 @@ const comments = require('../models/comments')
 commentsRouter.get('/comments', (req, res) => {
     Comments
     .find()
+    .populate('articleId')
     .then(comments => res.json(comments))
     .catch(err => res.json(err))
 })
