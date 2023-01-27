@@ -42,5 +42,4 @@ commentsRouter.delete('/comments/:id', (req, res) => {
     .catch(err => res.json(err))
 })
 
-
 module.exports = commentsRouter

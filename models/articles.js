@@ -6,10 +6,8 @@ const articlesSchema = new Schema({
     title : { type: String, required: true },
     date : {type: Date, default: Date.now()},
     text: { type: String, required: true },
-    userId: {
-        type : mongoose.Schema.Types.ObjectId, ref : 'Users'
-    },
-    comments : [{ type : mongoose.Schema.Types.ObjectId, ref : 'Comments'} ]
+    userId: { type : mongoose.Schema.Types.ObjectId, ref : 'Users' },
+    comments : [{ type : mongoose.Schema.Types.ObjectId, ref : 'Comments' }]
 })
 
 module.exports = mongoose.model('Articles', articlesSchema)

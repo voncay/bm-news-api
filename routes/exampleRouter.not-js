@@ -1,0 +1,86 @@
+const express = require('express');
+const router = express.Router();
+const mongoose = require('mongoose');
+const Article = require('./articles');
+const Comment = require('./comments');
+const User = require('./users');
+
+// Create a new article
+router.post('/articles', (req, res) => {
+  const newArticle = new Article({
+    author_name: req.body.author_name,
+    title: req.body.title,
+    text: req.body.text,
+    userId: req.body.userId,
+    comments: req.body.comments
+  });
+
+  newArticle.save()
+    .then(article => res.json(article))
+    .catch(err => res.status(400).json({ message: err.message }));
+});
+
+// Get all articles
+router.get('/articles', (req, res) => {
+  Article.find()
+    .populate('userId')
+    .populate('comments')
+    .then(articles => res.json(articles))
+    .catch(err => res.status(400).json({ message: err.message }));
+});
+
+// Get a specific article by id
+router.get('/articles/:id', (req, res) => {
+  Article.findById(req.params.id)
+    .populate('userId')
+    .populate('commentIds')
+    .then(article => {
+      if (!article) {
+        return res.status(404).json({ message: 'Article not found' });
+      }
+      res.json(article);
+    })
+    .catch(err => res.status(400).json({ message: err.message }));
+});
+
+// Update an article by id
+router.patch('/articles/:id', (req, res) => {
+  Article.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    .populate('userId')
+    .populate('commentIds')
+    .then(article => {
+      if (!article) {
+        return res.status(404).json({ message: 'Article not found' });
+      }
+      res.json(article);
+    })
+    .catch(err => res.status(400).json({ message: err.message }));
+});
+
+// Delete an article by id
+router.delete('/articles/:id', (req, res) => {
+  Article.findByIdAndDelete(req.params.id)
+    .then(article => {
+      if (!article) {
+        return res.status(404).json({ message: 'Article not found' });
+      }
+      res.json({ message: 'Article deleted' });
+    })
+    .catch(err => res.status(400).json({ message: err.message }));
+});
+
+// Create a new comment
+router.post('/comments', (req, res) => {
+  const newComment = new Comment({
+    author_name: req.body.author_name,
+    text: req.body.text,
+    articleId: req.body
+  })
+})
+
+// Update article by id
+
+Article.findByIdAndUpdate(req.params.id, { $set: req.body }, function (err, article) {
+    if (err) return next(err);
+    res.send('Article udpated.');
+});

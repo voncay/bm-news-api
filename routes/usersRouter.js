@@ -26,11 +26,10 @@ usersRouter.get('/users/:id', (req, res) =>{
 usersRouter.put('/users/:id', async (req, res) => {
     await Users.findOne({_id : req.params.id})
     await Users.updateOne({$set : req.body})
-    await Users.findOne({_id : req.params.id})
+    // await Users.findOne({_id : req.params.id})
     .then(newUser => res.json(newUser))
     .catch(err => res.json(err))
 })
-
 
 usersRouter.delete('/users/:id', (req, res) => {
     Users
@@ -38,7 +37,5 @@ usersRouter.delete('/users/:id', (req, res) => {
     .then(() => res.json('User deleted sucessfully'))
     .catch(err => res.json(err))
 })
-
-
 
 module.exports = usersRouter
